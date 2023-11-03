@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.fast.apparchticture"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.fast.apparchticture"
@@ -63,5 +63,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
+    //koin
+    implementation("io.insert-koin:koin-android:3.1.4")
 
 }

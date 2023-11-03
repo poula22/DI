@@ -7,8 +7,8 @@ import com.fast.apparchticture.domain.data_source.RemoteDataSource
 import com.fast.apparchticture.domain.repo.ItemsRepository
 
 class ItemsRepositoryImp(
-    private val localDataSource: LocalDataSource=LocalDataSourceImp(),
-    private val remoteDataSource: RemoteDataSource=RemoteDataSourceImp()
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource
 ):ItemsRepository {
     override suspend fun fetchData(): String {
         return remoteDataSource.fetchData()
