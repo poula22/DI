@@ -2,8 +2,10 @@ package com.fast.apparchticture.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import com.fast.apparchticture.data.data_source.local.LocalDataSourceImp
 import com.fast.apparchticture.data.data_source.local.LocalDatabase
+import com.fast.apparchticture.data.data_source.local.dao.ItemsDao
 import com.fast.apparchticture.data.data_source.remote.ApiManagerImp
 import com.fast.apparchticture.data.data_source.remote.RemoteDataSourceImp
 import com.fast.apparchticture.data.repo.ItemsRepositoryImp
@@ -16,29 +18,29 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-
-fun provideSharedPref(context: Context): SharedPreferences =
-    context.getSharedPreferences("app", Context.MODE_PRIVATE)
-
+fun provideSharedPref(context: Context): SharedPreferences = context.getSharedPreferences("app", Context.MODE_PRIVATE)
 fun provideApiManager(): ApiManager = ApiManagerImp()
 fun provideRemoteDataSource(apiManager: ApiManager) = RemoteDataSourceImp(apiManager)
-
-fun provideLocalDataSource(): LocalDataSource = LocalDataSourceImp()
-
+fun provideRoomDatabase(context: Context):LocalDatabase=
+    Room.databaseBuilder(context,LocalDatabase::class.java,"items-database").build()
+fun provideItemsDao(localDatabase: LocalDatabase)=localDatabase.itemsDao()
+fun provideLocalDataSource(itemsDao: ItemsDao): LocalDataSource = LocalDataSourceImp(itemsDao)
 fun provideItemsRepository(
     localDataSource: LocalDataSource,
     remoteDataSource: RemoteDataSource
 ): ItemsRepository =
     ItemsRepositoryImp(localDataSource = localDataSource, remoteDataSource = remoteDataSource)
 
+
 val appModule = module {
     single { provideSharedPref(androidContext()) }
     single { provideApiManager() }
-    single { LocalDatabase() }
+    single { provideRoomDatabase(androidContext()) }
+    single { provideItemsDao(localDatabase = get()) }
 }
 
 val dataSourceModules= module {
-    single { provideLocalDataSource() }
+    single { provideLocalDataSource(itemsDao = get()) }
     single { provideRemoteDataSource(apiManager = get()) }
 }
 

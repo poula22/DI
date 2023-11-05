@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,15 +56,20 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
-    //viewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+        //viewModel
+        implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+        implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
-    //Coroutine
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+        //Coroutine
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
-    //koin
-    implementation("io.insert-koin:koin-android:3.1.4")
+        //koin
+        implementation("io.insert-koin:koin-android:3.1.4")
+
+        //ROOM
+        implementation("androidx.room:room-runtime:2.6.0")
+        annotationProcessor("androidx.room:room-compiler:2.6.0")
+        ksp("androidx.room:room-compiler:2.6.0")
 
 }
