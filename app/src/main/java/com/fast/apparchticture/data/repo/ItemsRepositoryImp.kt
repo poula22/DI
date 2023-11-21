@@ -5,10 +5,10 @@ import com.fast.apparchticture.data.data_source.remote.RemoteDataSourceImp
 import com.fast.apparchticture.domain.data_source.LocalDataSource
 import com.fast.apparchticture.domain.data_source.RemoteDataSource
 import com.fast.apparchticture.domain.repo.ItemsRepository
+import javax.inject.Inject
 
-class ItemsRepositoryImp(
-    private val localDataSource: LocalDataSource=LocalDataSourceImp(),
-    private val remoteDataSource: RemoteDataSource=RemoteDataSourceImp()
+class ItemsRepositoryImp @Inject constructor(
+    private val remoteDataSource: RemoteDataSource
 ):ItemsRepository {
     override suspend fun fetchData(): String {
         return remoteDataSource.fetchData()

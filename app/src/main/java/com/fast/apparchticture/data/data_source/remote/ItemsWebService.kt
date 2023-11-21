@@ -1,5 +1,8 @@
 package com.fast.apparchticture.data.data_source.remote
 
+import retrofit2.http.GET
+
 interface ItemsWebService {
-    suspend fun getItems():String
+    @GET("activity")
+    suspend fun getItems():ResponseDto
 }
